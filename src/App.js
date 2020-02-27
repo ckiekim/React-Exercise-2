@@ -1,26 +1,53 @@
 import React, { Component } from 'react';
-import Clock from './Components/Clock';
+import Customer from './Components/Customer';
+import './App.css'
+
+const customers = [
+	{	'id': 1,
+		'image': 'https://placeimg.com/64/64/1',
+		'name': '홍길동',
+		'birthday': '961222',
+		'gender': '남자',
+		'job': '프로그래머'	},
+	{	'id': 2,
+		'image': 'https://placeimg.com/64/64/2',
+		'name': '이승엽',
+		'birthday': '861222',
+		'gender': '남자',
+		'job': '야구선수'	},
+	{	'id': 3,
+		'image': 'https://placeimg.com/64/64/3',
+		'name': '최혜진',
+		'birthday': '991222',
+		'gender': '여자',
+		'job': '프로골퍼'	}
+];
 
 class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			date: new Date()
+			isToggleOn: true
 		};
-	}
-	goBack() {
-		let nextDate = this.state.date;
-		nextDate.setSeconds(nextDate.getSeconds() - 10);
-		this.setState({
-			date: nextDate
-		});
 	}
 	render() {
 		return (
-			<div className="App">			
-				<h3>현재시각: {this.state.date.toLocaleTimeString()}</h3>
-				<button onClick={this.goBack.bind(this)}>10초 뒤로가기</button>
-				<Clock/>
+			<div>
+				{
+					customers.map(function(c) {
+						return (
+							<Customer
+								key={c.id}
+								id={c.id}
+								image={c.image}
+								name={c.name}
+								birthday={c.birthday}
+								gender={c.gender}
+								job={c.job}
+							></Customer>
+						);
+					})
+				}						
 			</div>
 		);
 	}

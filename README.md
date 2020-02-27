@@ -1,8 +1,8 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Customer Management System
 
-In the project directory, you can run:
+본 프로젝트는 React 강의용으로 만들어진 고객관리시스템입니다.
 
 ### `npm start`
 
