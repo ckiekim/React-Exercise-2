@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Customer from './Components/Customer';
+import CustomerAdd from './Components/CustomerAdd';
 import './App.css'
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -13,14 +14,14 @@ import { withStyles } from '@material-ui/core/styles';
 const styles = theme => ({
 	root: {
 		width: '100%',
-		marginTop: theme.spacing.unit * 3,
+		marginTop: theme.spacing(3),
 		overflowX: "auto"
 	},
 	table: {
 		minWidth: 1080
 	},
 	progress: {
-		margin: theme.spacing.unit * 2
+		margin: theme.spacing(2)
 	}
 });
 
@@ -32,15 +33,23 @@ const styles = theme => ({
  * 4) componentDidMount()
  */
 class App extends Component {
-	/* constructor(props) {
+	constructor(props) {
 		super(props);
 		this.state = {
-			isToggleOn: true
+			customers: "",
+			completed: 0
 		};
-	} */
-	state = {
-		customers: "",
-		completed: 0
+		this.stateRefresh = this.stateRefresh.bind(this);
+	}
+
+	stateRefresh = () => {
+		this.setState({
+			customers: "",
+			completed: 0
+		});
+		this.callApi()
+			.then(res => this.setState({customers: res}))
+			.catch(err => console.log(err));
 	}
 
 	componentDidMount() {
@@ -64,48 +73,55 @@ class App extends Component {
 	render() {
 		const { classes } = this.props;
 		return (
-			<Paper className={classes.root}>
-				<Table className={classes.table}>
-					<TableHead>
-						<TableRow>
-							<TableCell>번호</TableCell>
-							<TableCell>사진</TableCell>
-							<TableCell>이름</TableCell>
-							<TableCell>생년월일</TableCell>
-							<TableCell>성별</TableCell>
-							<TableCell>직업</TableCell>
-						</TableRow>
-					</TableHead>
-					<TableBody>
-						{
-							this.state.customers? this.state.customers.map(function(c) {
-								return (
-									<Customer
-										key={c.id}
-										id={c.id}
-										image={c.image}
-										name={c.name}
-										birthday={c.birthday}
-										gender={c.gender}
-										job={c.job}
-									></Customer>
-								);
-							}) : 
+			<div>
+				<Paper className={classes.root}>
+					<Table className={classes.table}>
+						<TableHead>
 							<TableRow>
-								<TableCell colSpan="6" align="center">
-									<CircularProgress 
-										className={classes.progress} 
-										variant="determinate" 
-										value={this.state.completed}
-									/>
-								</TableCell>
+								<TableCell>번호</TableCell>
+								<TableCell>사진</TableCell>
+								<TableCell>이름</TableCell>
+								<TableCell>생년월일</TableCell>
+								<TableCell>성별</TableCell>
+								<TableCell>직업</TableCell>
+								<TableCell>생성시각</TableCell>
+								<TableCell>명령</TableCell>
 							</TableRow>
-						}						
-					</TableBody>
-				</Table>
-			</Paper>
+						</TableHead>
+						<TableBody>
+							{
+								this.state.customers? this.state.customers.map(function(c) {
+									return (
+										<Customer
+											stateRefresh={() => this.stateRefresh()}
+											key={c.id}
+											id={c.id}
+											image={c.image}
+											name={c.name}
+											birthday={c.birthday}
+											gender={c.gender}
+											job={c.job}
+											createdDate={c.createdDate}
+										></Customer>
+									);
+								}) : 
+								<TableRow>
+									<TableCell colSpan="8" align="center">
+										<CircularProgress 
+											className={classes.progress} 
+											variant="determinate" 
+											value={this.state.completed}
+										/>
+									</TableCell>
+								</TableRow>
+							}						
+						</TableBody>
+					</Table>
+				</Paper>
+				<CustomerAdd stateRefresh={this.stateRefresh}></CustomerAdd>
+			</div>
 		);
 	}
 }
-
+// stateRefresh={this.stateRefresh}  ====> stateRefresh={() => this.stateRefresh()}
 export default withStyles(styles)(App);
