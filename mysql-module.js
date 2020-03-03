@@ -21,6 +21,18 @@ module.exports = {
         });
         return connection;
     },
+    getCustomerById:    function(id, callback) {
+        const conn = this.getConnection();
+        const sql = 'select * from customer where id = ?';   // DATE_FORMAT(createdDate, '%Y-%m-%d %T')
+
+        conn.query(sql, id, function(err, row, fields) {
+            if (err)
+                console.log(err);
+            else
+                callback(row);
+        });
+        conn.end();
+    },
     getCustomers:  function(callback) {
         const conn = this.getConnection();
         const sql = 'select * from customer where isDeleted = 0';   // DATE_FORMAT(createdDate, '%Y-%m-%d %T')
@@ -52,6 +64,18 @@ module.exports = {
         const sql = 'update customer set isDeleted=1 where id = ?';
 
         conn.query(sql, id, function(err, result) {
+            if (err)
+                console.log(err);
+            else
+                callback();
+        });
+        conn.end();
+    },
+    updateCustomer: function(params, callback) {
+        const conn = this.getConnection();
+        const sql = 'update customer set image=?, name=?, birthday=?, gender=?, job=? where id = ?';
+
+        conn.query(sql, params, function(err, result) {
             if (err)
                 console.log(err);
             else

@@ -18,12 +18,7 @@ class CustomerAdd extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            file: null,
-            userName: '',
-            birthday: '',
-            gender: '',
-            job: '',
-            fileName: '',
+            file: null, userName: '', birthday: '', gender: '', job: '', fileName: '',
             open: false
         }
         this.handleFormSubmit = this.handleFormSubmit.bind(this);
@@ -40,12 +35,7 @@ class CustomerAdd extends Component {
     }
     handleClickClose() {
         this.setState({
-            file: null,
-            userName: '',
-            birthday: '',
-            gender: '',
-            job: '',
-            fileName: '',
+            file: null, userName: '', birthday: '', gender: '', job: '', fileName: '',
             open: false
         });
     }
@@ -58,12 +48,7 @@ class CustomerAdd extends Component {
                 window.location.reload();
             });
             this.setState({
-                file: null,
-                userName: '',
-                birthday: '',
-                gender: '',
-                job: '',
-                fileName: '',
+                file: null, userName: '', birthday: '', gender: '', job: '', fileName: '',
                 open: false
             });
     }
@@ -88,7 +73,6 @@ class CustomerAdd extends Component {
         formData.append('birthday', this.state.birthday);
         formData.append('gender', this.state.gender);
         formData.append('job', this.state.job);
-        //formData.append('fileName', this.state.fileName);
         const config = {
             headers: {
                 'content-type': 'multipart/form-data'

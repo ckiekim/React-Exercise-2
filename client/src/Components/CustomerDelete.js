@@ -35,8 +35,8 @@ class CustomerDelete extends Component {
     }
     render() {
         return (
-            <div>
-                <Button variant="contained" color="secondary" onClick = {this.handleClickOpen}>삭제</Button>
+            <span>
+                <Button variant="outlined" color="secondary" onClick = {this.handleClickOpen}>삭제</Button>
                 <Dialog open={this.state.open} onClose={this.handleClickClose}>
                     <DialogTitle>
                         삭제 확인
@@ -51,7 +51,7 @@ class CustomerDelete extends Component {
                         <Button variant="outlined" color="primary" onClick={this.handleClickClose}>닫기</Button>
                     </DialogActions>
                 </Dialog>
-            </div>
+            </span>
         )
     }
 }
